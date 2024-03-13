@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 int mycat() {
 	char buff[BUFF_SIZE]; // on utilisera un buffer de 1 octet
 	// lecture sur stdin
-	printf("Start : mycat\n");
+	//printf("Start : mycat\n");
 
 
 	while(read(STDIN_FILENO, &buff, BUFF_SIZE) > 0) {
@@ -48,7 +48,7 @@ int mycat() {
 	}
 
 	printf("\n");
-	printf("End : mycat\n");
+	//printf("End : mycat\n");
 
 	return 0;
 }

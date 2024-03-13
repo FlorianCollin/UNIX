@@ -6,14 +6,16 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
-
 #include "utils.h"
 
+/*
+
+// EXERCICE //
+
+*/
 
 
 int main(int argc, char *argv[])
 {
-	printf("Hello world \n");
 	return EXIT_SUCCESS;
 }

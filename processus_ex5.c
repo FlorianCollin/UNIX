@@ -23,7 +23,6 @@ int main(int argc, char *argv[])
         exit(EXIT_SUCCESS);
     }
 
-    // si procésus père, on ne fais rien on termine !:w
     
     return 0;
 }

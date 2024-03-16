@@ -11,10 +11,13 @@
 
 /*
 
-Exercice 3
-Écrire une commande emettre-signaux pid-cible k s1 s2 ... sn qui émet à destination du processus cible k fois la séquence de signaux donnée en paramètre.
+Exercice 4
+Il s’agit maintenant de faire dialoguer un père et son fils à l’aide de signaux. Pour cela on va écrire une commande signaux-pere-fils k s1 s2 ... sn où le fils va émettre vers son père k fois la séquence de signaux donnée en paramètre. On utilisera le signal KILL pour terminer le dialogue.
 
-Utiliser cette commande pour “bombarder” de signaux un processus exécutant la commande de l’exercice précédent.
+Afin de ne pas perdre de signaux on va mettre en œuvre le protocole suivant : le père devra envoyer au fils le signal USR1 pour acquitter chaque réception, de son coté le fils devra attendre l’acquittement du père pour poursuivre l’émission.Exercice 4
+Il s’agit maintenant de faire dialoguer un père et son fils à l’aide de signaux. Pour cela on va écrire une commande signaux-pere-fils k s1 s2 ... sn où le fils va émettre vers son père k fois la séquence de signaux donnée en paramètre. On utilisera le signal KILL pour terminer le dialogue.
+
+Afin de ne pas perdre de signaux on va mettre en œuvre le protocole suivant : le père devra envoyer au fils le signal USR1 pour acquitter chaque réception, de son coté le fils devra attendre l’acquittement du père pour poursuivre l’émission.
 
 */
 
@@ -28,7 +31,9 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Usage : emettre-signaux pid-cible k s1 s2 ... sn\n");
 		exit(EXIT_FAILURE);
 	}
+	int fpid = fork();
 
+	
 	int pid_cible = atoi(argv[1]);
 	int k = atoi(argv[2]);
 	int s = atoi(argv[3]);

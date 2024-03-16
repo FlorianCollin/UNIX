@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 	// création de la structure sigaction
 	struct sigaction sa;
     sa.sa_handler = sigusr1_handle;
-    sigemptyset(&sa.sa_mask); // aucun signal doit être bloqué quand le signal SIGUSR1 est recu
+    sigemptyset(&sa.sa_mask);
     sa.sa_flags = 0;
 
 

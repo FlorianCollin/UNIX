@@ -19,7 +19,7 @@ Comment limiter le nombre de lseek ? Le faire.
 */
 
 
-// Ce programme est insatisfaisant, il ne permet pas d'écrire le premier caractère de input file ??
+// Limitation à 2 lseek // cette version est ainsi la définitif de l'exercice 6 !!
 
 int main(int argc, char *argv[]) {
 	if (argc < 2) {
@@ -40,47 +40,51 @@ int main(int argc, char *argv[]) {
 		perror("open output file fail !");
 		exit(EXIT_FAILURE);
 	}
-	char buff;
-	int current_offset = -1;
-	// On ce positione à la fin du fichier
-	int current_position = lseek(fd_input_file, current_offset, SEEK_END);
-	if (current_position == -1) {
+
+	int taille_fichier = lseek(fd_input_file, 0, SEEK_END);
+	if (taille_fichier == -1) {
+		perror("lseek fail !");
+		exit(EXIT_FAILURE);
+	}
+	// allocation dynamique
+
+	char *buffer_d = (char *)malloc(1*taille_fichier);
+	if (buffer_d == NULL) {
+		perror("malloc fail !");
+		exit(EXIT_FAILURE);
+	}
+
+	printf("input file size : %d\n", taille_fichier);
+
+	if(lseek(fd_input_file, 0, SEEK_SET) == -1) {
 		perror("lseek fail !");
 		exit(EXIT_FAILURE);
 	}
 
-	printf("input file size : %d\n", current_position);
-
 	int read_status;
-	int exit_status = 0;
-	while (!exit_status) {
-		// lecuture dans input file
-		read_status = read(fd_input_file, &buff, 1);
-		if (read_status == -1) {
-			perror("read fail !");
-			exit(EXIT_FAILURE);
-		}
-		
-		current_offset--;	
-		current_position = lseek(fd_input_file, current_offset, SEEK_END);
+	// int exit_status = 0;
+	
 
-		printf("Position courante : %d\n", current_position);
-
-		if(current_position == -1) {
-			perror("lseek fail!");
-			exit(EXIT_FAILURE);
-		}
-
-		if (current_position == 0) {
-			exit_status = 1;
-		}
-		printf("%c\n", buff);
-		if (write(fd_output_file, &buff, 1) == -1) {
+	read_status = read(fd_input_file, buffer_d, taille_fichier);
+	if (read_status == -1) {
+		perror("read fail !");
+		exit(EXIT_FAILURE);
+	}
+	printf("Read status control: %d \terrno : %s \n", read_status, strerror(errno));
+	printf("Nombre de caractère lue sur input-file : %d.\n", read_status);
+	// for debug
+	for (int k = 0; k < read_status; k++) {
+		printf("caractère n°%d : %c\n", k, *(buffer_d + k));
+	}
+	
+	for (int k = read_status -1; k >= 0; k--) {
+		if (write(fd_output_file, buffer_d+k, 1) == -1) {
 			perror("write fail !");
 			exit(EXIT_FAILURE);
-		}
+		}		
 	}
-	printf("Read status : %d (errno : %s) \n", read_status, strerror(errno));
+
+	free(buffer_d);
 	close(fd_input_file);
 	close(fd_output_file);
 	return EXIT_SUCCESS;

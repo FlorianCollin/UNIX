@@ -20,6 +20,7 @@ Comment limiter le nombre de lseek ? Le faire.
 
 
 // Ce programme est insatisfaisant, il ne permet pas d'écrire le premier caractère de input file ??
+// le programme fichier_ex6_2 fourni une correction !
 
 int main(int argc, char *argv[]) {
 	if (argc < 2) {

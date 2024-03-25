@@ -7,6 +7,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/mman.h>
+#include <semaphore.h>
 
 
 //#include "utils.h"
@@ -69,7 +70,7 @@ int main(int argc, char *argv[]) {
 		for (int i = 0; i<NB_ITT; i++) {
 			printf("père : %d\n", *shared_int);
 			(*shared_int)++;
-			sleep(1);
+			//sleep(1);
 		}
 		wait(NULL);
 	}

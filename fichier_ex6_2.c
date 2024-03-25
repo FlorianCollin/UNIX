@@ -47,7 +47,11 @@ int main(int argc, char *argv[]) {
 		exit(EXIT_FAILURE);
 	}
 	// allocation dynamique
-
+	// ajout d'une sécurité pour ne pas saturer la ram
+	if (taille_fichier > 2**15) {
+		fprintf(stderr, "Mesure de sécurité déclencher, fichier trop volumineux : %d\n");
+		exit(EXIT_FAILURE);
+	}
 	char *buffer_d = (char *)malloc(1*taille_fichier);
 	if (buffer_d == NULL) {
 		perror("malloc fail !");

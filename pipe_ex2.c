@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
 
 	// Création du pipe
     if (pipe(pipefd) == -1) {
-        fprintf("pipe fail : %s\n", strerror(errno));
+        fprintf(stderr, "pipe fail : %s\n", strerror(errno));
         exit(EXIT_FAILURE);
     }
 
